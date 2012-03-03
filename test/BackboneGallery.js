@@ -1,4 +1,4 @@
-TestCase('BackboneGallery', {
+TestCase('BackboneGalleryTest', {
 	setUp: function () {
 		/*:DOC gallery = <ul id="gallery">
 			<li><img src="" /></li>
@@ -13,7 +13,7 @@ TestCase('BackboneGallery', {
 		</ul>*/
 	},
 	
-	'test should return BackboneGallery object': function () {
+	'test create() should return a BackboneGallery object': function () {
 		var backboneGallery = BackboneGallery.create();
 		
 		assertObject(backboneGallery);
