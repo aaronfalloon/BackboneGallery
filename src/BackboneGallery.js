@@ -12,6 +12,9 @@ var BackboneGallery = (function () {
 	 * @returns {object} A BackboneGallery object
 	 */
 	var create = function () {
+		if (typeof el === 'undefined') {
+			throw new Error('create(): el can\'t be undefined');
+		}
 		return {};
 	};
 	
