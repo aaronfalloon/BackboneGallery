@@ -32,13 +32,10 @@ var BackboneGallery = (function () {
 			throw new Error('create(): el can\'t be undefined');
 		}
 		gallery = new Gallery();
-		
-		return {
-			images: gallery
-		};
 	};
 	
 	return {
 		create: create
+		Gallery: Gallery
 	};
 }());
