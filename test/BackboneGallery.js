@@ -14,13 +14,22 @@ TestCase('BackboneGalleryTest', {
 			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
 			</ul>
 		</div> */
-	},
-	
-	'test create() should return undefined': function () {
-		var backboneGallery = BackboneGallery.create({
+		this.backboneGallery = new BackboneGallery.GalleryView({
 			el: this.gallery
 		});
-		
-		assertUndefined(backboneGallery);
+	},
+	
+	'test GalleryView should expect <div> with .gallery as its el argument': function () {
+		assertException(function () {
+			var gallery = new BackboneGallery.GalleryView();
+		});
+	},
+	
+	'test GalleryView should create associated GalleryCollection': function () {
+		assertObject(this.backboneGallery.collection);
+	},
+	
+	'test GalleryCollection should create models for each image in the list': function () {
+		assertEquals(9, this.backboneGallery.collection.models.length);
 	}
 });

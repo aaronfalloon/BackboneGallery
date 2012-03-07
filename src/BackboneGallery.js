@@ -7,35 +7,45 @@
 var BackboneGallery = (function () {
 	'use strict';
 	
-	var create,
-		Gallery,
-		images;
-	
+	var ImageModel,
+		GalleryCollection,
+		GalleryView;
 	
 	/**
 	 * Encapsulates all of the image models.
 	 */
-	Gallery = Backbone.Collection.extend({
+	GalleryCollection = Backbone.Collection.extend({
 		
 	});
 	
 	
 	/**
-	 * Creates a BackboneGallery object.
-	 * 
-	 * @returns {object} A BackboneGallery object
+	 * Manages the gallery.
 	 */
-	var create = function (options) {
-		var gallery;
-		
-		if (typeof options.el === 'undefined') {
-			throw new Error('create(): el can\'t be undefined');
+	GalleryView = Backbone.Collection.extend({
+		initialize: function (args) {
+			var self = this,
+				thumbnails;
+				
+			if (typeof args.el === 'undefined') {
+				throw new Error('el can\'t be undefined');
+			}
+			this.collection = new GalleryCollection();
+			// Create models for each list item
+			thumbnails = $(this.el).children('thumbnails').children('li');
+			thumbnails.each(function (index) {
+				self.colleciton.add([new ImageModel()]);
+			});
 		}
-		gallery = new Gallery();
-	};
+	});
+	
+	
+	/**
+	 * Holds information on each image in the gallery.
+	 */
+	ImageModel = Backbone.Collection.extend();
 	
 	return {
-		create: create
-		Gallery: Gallery
-	};
+		GalleryView: GalleryView
+	}
 }());
