@@ -6,16 +6,36 @@
  */
 var BackboneGallery = (function () {
 	'use strict';
+	
+	var create,
+		Gallery,
+		images;
+	
+	
+	/**
+	 * Encapsulates all of the image models.
+	 */
+	Gallery = Backbone.Collection.extend({
+		
+	});
+	
+	
 	/**
 	 * Creates a BackboneGallery object.
 	 * 
 	 * @returns {object} A BackboneGallery object
 	 */
-	var create = function () {
-		if (typeof el === 'undefined') {
+	var create = function (options) {
+		var gallery;
+		
+		if (typeof options.el === 'undefined') {
 			throw new Error('create(): el can\'t be undefined');
 		}
-		return {};
+		gallery = new Gallery();
+		
+		return {
+			images: gallery
+		};
 	};
 	
 	return {
