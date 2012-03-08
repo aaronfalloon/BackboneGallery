@@ -22,20 +22,23 @@ var BackboneGallery = (function () {
 	/**
 	 * Manages the gallery.
 	 */
-	GalleryView = Backbone.Collection.extend({
+	GalleryView = Backbone.View.extend({
 		initialize: function (args) {
-			var self = this,
+			var imageModels,
+				self = this,
 				thumbnails;
 				
 			if (typeof args.el === 'undefined') {
 				throw new Error('el can\'t be undefined');
 			}
 			this.collection = new GalleryCollection();
-			// Create models for each list item
-			thumbnails = $(this.el).children('thumbnails').children('li');
+			// Create image models for each list item
+			thumbnails = this.$el.children('.thumbnails').children('li');
+			imageModels = [];
 			thumbnails.each(function (index) {
-				self.colleciton.add([new ImageModel()]);
+				imageModels.push(new ImageModel());
 			});
+			this.collection.add(imageModels);
 		}
 	});
 	
@@ -43,9 +46,16 @@ var BackboneGallery = (function () {
 	/**
 	 * Holds information on each image in the gallery.
 	 */
-	ImageModel = Backbone.Collection.extend();
+	ImageModel = Backbone.Model.extend({
+		initialize: function (args) {
+			if (typeof args.src === 'undefined') {
+				throw new Error('src can\'t be undefined');
+			}
+		}
+	});
 	
 	return {
+		ImageModel: ImageModel,
 		GalleryView: GalleryView
 	}
 }());

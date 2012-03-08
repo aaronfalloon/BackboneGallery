@@ -31,5 +31,11 @@ TestCase('BackboneGalleryTest', {
 	
 	'test GalleryCollection should create models for each image in the list': function () {
 		assertEquals(9, this.backboneGallery.collection.models.length);
+	},
+	
+	'test ImageModel should expect a URL as its src argument': function () {
+		assertException(function () {
+			var imageModel = new BackboneGallery.ImageModel();
+		});
 	}
 });
