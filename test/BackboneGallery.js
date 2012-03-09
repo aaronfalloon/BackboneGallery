@@ -33,15 +33,19 @@ TestCase('BackboneGalleryTest', {
 		assertEquals(9, this.backboneGallery.collection.models.length);
 	},
 	
+	'test GalleryView should set the first image model as selected': function () {
+		assertEquals(this.backboneGallery.collection.at(0), this.backboneGallery.collection.selected);
+	},
+	
 	'test ImageModel should expect a URL as its src argument': function () {
 		assertException(function () {
 			var imageModel = new BackboneGallery.ImageModel();
 		});
 	},
 	
-	'test selectImage() should set the specified image as the main image': function () {
-		this.backboneGallery.setImage(8);
+	'test select() should set the selected image': function () {
+		this.backboneGallery.collection.select(8);
 		
-		assertClassName('selected', $('#thumbnails').children('img').get(8));
+		assertClassName('selected', $('#thumbnails').find('img').get(8));
 	}
 });

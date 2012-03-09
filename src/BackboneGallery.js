@@ -15,7 +15,9 @@ var BackboneGallery = (function () {
 	 * Encapsulates all of the image models.
 	 */
 	GalleryCollection = Backbone.Collection.extend({
-		
+		select: function () {
+			
+		}
 	});
 	
 	
@@ -31,16 +33,29 @@ var BackboneGallery = (function () {
 			if (typeof args.el === 'undefined') {
 				throw new Error('el can\'t be undefined');
 			}
+			
 			this.collection = new GalleryCollection();
 			// Create image models for each list item
 			thumbnails = this.$el.children('.thumbnails').children('li');
 			imageModels = [];
 			thumbnails.each(function (index) {
 				imageModels.push(new ImageModel({
-					src: $(this).children('li').attr('src')
+					src: $(this).children('img').attr('src')
 				}));
 			});
 			this.collection.add(imageModels);
+			this.collection.selected = this.collection.at(0);
+		},
+		
+		
+		/**
+		 * Sets the selected image.
+		 *
+		 * @param {integer} index The index of the image to set as the selected
+		 *     image
+		 */
+		setSelectedImage: function (index) {
+			
 		}
 	});
 	
