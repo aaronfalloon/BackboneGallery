@@ -19,6 +19,10 @@ TestCase('BackboneGalleryTest', {
 		});
 	},
 	
+	tearDown: function () {
+		
+	},
+	
 	'test GalleryView should expect <div> with .gallery as its el argument': function () {
 		assertException(function () {
 			var gallery = new BackboneGallery.GalleryView();
@@ -45,7 +49,19 @@ TestCase('BackboneGalleryTest', {
 	
 	'test select() should set the selected image': function () {
 		this.backboneGallery.collection.select(8);
-		
-		assertClassName('selected', $('#thumbnails').find('img').get(8));
+		assertEquals(this.backboneGallery.collection.at(8), this.backboneGallery.collection.selected);
+		this.backboneGallery.collection.select(4);
+		assertEquals(this.backboneGallery.collection.at(4), this.backboneGallery.collection.selected);
+	},
+	
+	'test select() should trigger a select:image event when a new image is selected': function () {
+		var spy = sinon.spy(this.backboneGallery.collection, 'trigger');
+		this.backboneGallery.collection.select(4);
+		assert(spy.calledWith('select:image'));
+	},
+	
+	'test GalleryView should set the class of the list item of the selected image to "selected" on a select:image event': function () {
+		this.backboneGallery.collection.select(7);
+		assertClassName('selected', this.backboneGallery.$el.children('.thumbnails').children('li').get(7));
 	}
 });

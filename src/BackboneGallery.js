@@ -15,8 +15,17 @@ var BackboneGallery = (function () {
 	 * Encapsulates all of the image models.
 	 */
 	GalleryCollection = Backbone.Collection.extend({
-		select: function () {
+		
+		
+		/**
+		 * Sets an image as the selected image.
+		 * 
+		 * @param {integer} index The index of the image to select
+		 */
+		select: function (index) {
+			this.selected = this.at(index);
 			
+			this.trigger('select:image');
 		}
 	});
 	
@@ -45,17 +54,19 @@ var BackboneGallery = (function () {
 			});
 			this.collection.add(imageModels);
 			this.collection.selected = this.collection.at(0);
+			// Bind to collection events
+			this.collection.bind('select:image', this.setAsSelected, this);
 		},
 		
 		
 		/**
-		 * Sets the selected image.
+		 * Sets an image as selected.
 		 *
-		 * @param {integer} index The index of the image to set as the selected
-		 *     image
+		 * @param {integer} index The index of the image list item
 		 */
-		setSelectedImage: function (index) {
-			
+		setAsSelected: function (index) {
+			this.$el.children('.thumbnails').removeClass('selected');
+			this.$el.children('.thumbnails').children('li').eq(index).addClass('selected');
 		}
 	});
 	
