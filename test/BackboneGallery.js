@@ -37,5 +37,11 @@ TestCase('BackboneGalleryTest', {
 		assertException(function () {
 			var imageModel = new BackboneGallery.ImageModel();
 		});
+	},
+	
+	'test selectImage() should set the specified image as the main image': function () {
+		this.backboneGallery.setImage(8);
+		
+		assertClassName('selected', $('#thumbnails').children('img').get(8));
 	}
 });

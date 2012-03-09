@@ -36,7 +36,9 @@ var BackboneGallery = (function () {
 			thumbnails = this.$el.children('.thumbnails').children('li');
 			imageModels = [];
 			thumbnails.each(function (index) {
-				imageModels.push(new ImageModel());
+				imageModels.push(new ImageModel({
+					src: $(this).children('li').attr('src')
+				}));
 			});
 			this.collection.add(imageModels);
 		}
