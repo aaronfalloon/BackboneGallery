@@ -3,15 +3,16 @@ TestCase('BackboneGalleryTest', {
 		/*:DOC gallery = <div class="gallery">
 			<img alt="BMW" src="images/bmw.jpg" />
 			<ul class="thumbnails">
-			    <li class="selected"><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
-			    <li><img alt="BMW" src="images/bmw.jpg" /></li>
+			    <li class="selected"><img alt="BMW" src="images/bmw0.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw1.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw2.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw3.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw4.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw5.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw6.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw7.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw8.jpg" /></li>
+				<li><img alt="BMW" src="images/bmw8.jpg" /></li>
 			</ul>
 		</div> */
 		this.backboneGallery = new BackboneGallery.GalleryView({
@@ -63,5 +64,33 @@ TestCase('BackboneGalleryTest', {
 	'test GalleryView should set the class of the list item of the selected image to "selected" on a select:image event': function () {
 		this.backboneGallery.collection.select(7);
 		assertClassName('selected', this.backboneGallery.$el.children('.thumbnails').children('li').get(7));
+	},
+	
+	'test setAsSelected() should change the main image': function () {
+		this.backboneGallery.collection.select(3);
+		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
+	},
+	
+	'test duplicate images shouldn\'t appear in the gallery': function () {
+		var countsAreAllOne = true,
+			imageSrcs = [],
+			imageSrcsCount = {};
+			
+		$(this.gallery).children('thumbnails').children('li').children('img').each(function (index) {
+			imageSrcs.append(this.src);
+		});
+		for (var i = 0, ii = imageSrcs.length; i < ii; i++) {
+			if (typeof imageSrcsCount[imageSrcs[i]] === 'undefined') {
+				imageSrcsCount[imageSrcs[i]] = 1;
+			} else {
+				imageSrcsCount++;
+			}
+		}
+		for (var i = 0, ii = imageSrcsCount.length; i < ii; i++) {
+			if (imageSrcsCount[i] > 1) {
+				countsAreAllOne = false;
+			}
+		}
+		assertTrue(countsAreAllOne);
 	}
 });

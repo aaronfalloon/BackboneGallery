@@ -25,7 +25,7 @@ var BackboneGallery = (function () {
 		select: function (index) {
 			this.selected = this.at(index);
 			
-			this.trigger('select:image');
+			this.trigger('select:image', index);
 		}
 	});
 	
@@ -65,8 +65,11 @@ var BackboneGallery = (function () {
 		 * @param {integer} index The index of the image list item
 		 */
 		setAsSelected: function (index) {
-			this.$el.children('.thumbnails').removeClass('selected');
-			this.$el.children('.thumbnails').children('li').eq(index).addClass('selected');
+			var liToUpdate = this.$el.children('.thumbnails').children('li').eq(index);
+			this.$el.children('.thumbnails').children('li').removeClass('selected');
+			liToUpdate.addClass('selected');
+			// Set the main image
+			this.$el.children('img').eq(0).replaceWith(liToUpdate.children('img').clone());
 		}
 	});
 	
