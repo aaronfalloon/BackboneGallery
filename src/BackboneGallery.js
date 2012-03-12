@@ -43,6 +43,7 @@ var BackboneGallery = (function () {
 				throw new Error('el can\'t be undefined');
 			}
 			
+			this.removeDuplicates();
 			this.collection = new GalleryCollection();
 			// Create image models for each list item
 			thumbnails = this.$el.children('.thumbnails').children('li');
@@ -56,6 +57,24 @@ var BackboneGallery = (function () {
 			this.collection.selected = this.collection.at(0);
 			// Bind to collection events
 			this.collection.bind('select:image', this.setAsSelected, this);
+		},
+		
+		
+		/**
+		 * Removes any duplicate images. An image is a duplicate if it has an
+		 * src which is the same as another image already in the gallery.
+		 */
+		removeDuplicates: function () {
+			var imageSrcs = {},
+				thumbnails = this.$el.children('.thumbnails').children('li').children('img');
+				
+			thumbnails.each(function (index) {
+				if (typeof imageSrcs[this.src] === 'undefined') {
+					imageSrcs[this.src] = true;
+				} else {
+					$(this).parent('li').remove();
+				}
+			});
 		},
 		
 		

@@ -38,6 +38,29 @@ TestCase('BackboneGalleryTest', {
 		assertEquals(9, this.backboneGallery.collection.models.length);
 	},
 	
+	'test duplicate images shouldn\'t appear in the gallery': function () {
+		var countsAreAllOne = true,
+			imageSrcs = [],
+			imageSrcsCount = {};
+		
+		$(this.gallery).children('.thumbnails').children('li').children('img').each(function (index) {
+			imageSrcs.push(this.src);
+		});
+		for (var i = 0, ii = imageSrcs.length; i < ii; i++) {
+			if (typeof imageSrcsCount[imageSrcs[i]] === 'undefined') {
+				imageSrcsCount[imageSrcs[i]] = 1;
+			} else {
+				imageSrcsCount[imageSrcs[i]]++;
+			}
+		}
+		for (imageSrcCount in imageSrcsCount) {
+			if (imageSrcsCount[imageSrcCount] > 1) {
+				countsAreAllOne = false;
+			}
+		}
+		assertTrue(countsAreAllOne);
+	},
+	
 	'test GalleryView should set the first image model as selected': function () {
 		assertEquals(this.backboneGallery.collection.at(0), this.backboneGallery.collection.selected);
 	},
@@ -69,28 +92,5 @@ TestCase('BackboneGalleryTest', {
 	'test setAsSelected() should change the main image': function () {
 		this.backboneGallery.collection.select(3);
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
-	},
-	
-	'test duplicate images shouldn\'t appear in the gallery': function () {
-		var countsAreAllOne = true,
-			imageSrcs = [],
-			imageSrcsCount = {};
-			
-		$(this.gallery).children('thumbnails').children('li').children('img').each(function (index) {
-			imageSrcs.append(this.src);
-		});
-		for (var i = 0, ii = imageSrcs.length; i < ii; i++) {
-			if (typeof imageSrcsCount[imageSrcs[i]] === 'undefined') {
-				imageSrcsCount[imageSrcs[i]] = 1;
-			} else {
-				imageSrcsCount++;
-			}
-		}
-		for (var i = 0, ii = imageSrcsCount.length; i < ii; i++) {
-			if (imageSrcsCount[i] > 1) {
-				countsAreAllOne = false;
-			}
-		}
-		assertTrue(countsAreAllOne);
 	}
 });
