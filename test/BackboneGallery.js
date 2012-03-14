@@ -92,5 +92,13 @@ TestCase('BackboneGalleryTest', {
 	'test setAsSelected() should change the main image': function () {
 		this.backboneGallery.collection.select(3);
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
+	},
+	
+	'test an event listener should be set to listen for events on the list items': function () {
+		var spy = sinon.spy(BackboneGallery.GalleryView.__super__, 'delegateEvents');
+		var backboneGallery = BackboneGallery.GalleryView({
+			el: this.gallery
+		});
+		assert(spy.calledOnce());
 	}
 });
