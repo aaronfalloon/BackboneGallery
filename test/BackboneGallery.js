@@ -94,11 +94,10 @@ TestCase('BackboneGalleryTest', {
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
 	},
 	
-	'test an event listener should be set to listen for events on the list items': function () {
-		var spy = sinon.spy(BackboneGallery.GalleryView.__super__, 'delegateEvents');
-		var backboneGallery = BackboneGallery.GalleryView({
-			el: this.gallery
-		});
-		assert(spy.calledOnce());
+	'test handleClick() should be called after a list item is clicked': function () {
+		var spy = sinon.spy(this.backboneGallery, 'handleClick');
+		$(this.gallery).children('.thumbnails').children('li').eq(3).trigger('click');
+		
+		assert(spy.calledOnce);
 	}
 });

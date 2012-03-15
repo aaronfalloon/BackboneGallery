@@ -34,6 +34,11 @@ var BackboneGallery = (function () {
 	 * Manages the gallery.
 	 */
 	GalleryView = Backbone.View.extend({
+		events: {
+			'click li': 'handleClick'
+		},
+		
+		
 		initialize: function (args) {
 			var imageModels,
 				self = this,
@@ -57,6 +62,16 @@ var BackboneGallery = (function () {
 			this.collection.selected = this.collection.at(0);
 			// Bind to collection events
 			this.collection.bind('select:image', this.setAsSelected, this);
+		},
+		
+		
+		/**
+		 * Handles any clicks on list items.
+		 *
+		 * @param {Event} event A click event
+		 */
+		handleClick: function (event) {
+
 		},
 		
 		
