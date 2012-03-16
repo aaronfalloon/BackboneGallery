@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>BackboneGallery</title>
+        <style type="text/css">
+            .thumbnails {
+                width: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="gallery">
+			<img alt="BMW" src="images/bmw0.jpg" />
+			<ul class="thumbnails">
+			    <li class="selected"><img alt="BMW" src="images/bmw0.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw1.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw2.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw3.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw4.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw5.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw6.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw7.jpg" /></li>
+			    <li><img alt="BMW" src="images/bmw8.jpg" /></li>
+				<li><img alt="BMW" src="images/bmw8.jpg" /></li>
+			</ul>
+		</div>
+		<script src="../vendor/jquery.js"></script>
+		<script src="../vendor/underscore.js"></script>
+		<script src="../vendor/backbone.js"></script>
+		<script src="../src/BackboneGallery.js"></script>
+		<script>
+		    var backboneGallery = new BackboneGallery({
+		        el: $('.gallery')
+		    });
+		</script>
+    </body>
+</html>
