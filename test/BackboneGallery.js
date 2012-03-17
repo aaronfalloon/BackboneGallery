@@ -1,3 +1,10 @@
+Helpers = {
+	// From http://fitzgeraldnick.com/weblog/35/
+	async: function (fn) {
+		setTimeout(fn, 20);
+	}
+};
+
 TestCase('BackboneGalleryTest', {
 	setUp: function () {
 		/*:DOC gallery = <div class="gallery">
@@ -94,10 +101,12 @@ TestCase('BackboneGalleryTest', {
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
 	},
 	
-	'test handleClick() should be called after a list item is clicked': function () {
+	'test handleClick() should be called after a list item is clicked': function (queue) {
 		var spy = sinon.spy(this.backboneGallery, 'handleClick');
 		$(this.gallery).children('.thumbnails').children('li').eq(3).trigger('click');
 		
-		assert(spy.calledOnce);
+		Helpers.async(function () {
+			assert(spy.calledOnce);
+		});
 	}
 });
