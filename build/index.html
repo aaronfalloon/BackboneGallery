@@ -1,9 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <title>BackboneGallery</title>
-        <style type="text/css">
-            .thumbnails {
-                width: 1em;
+        <style>
+            img {
+                width: 8em;
+            }
+            
+            li {
+                float: left;
+                list-style: none;
             }
         </style>
     </head>
@@ -28,7 +34,7 @@
 		<script src="../vendor/backbone.js"></script>
 		<script src="../src/BackboneGallery.js"></script>
 		<script>
-		    var backboneGallery = new BackboneGallery({
+		    var backboneGallery = new BackboneGallery.GalleryView({
 		        el: $('.gallery')
 		    });
 		</script>
