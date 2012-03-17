@@ -5,7 +5,7 @@ Helpers = {
 	}
 };
 
-TestCase('BackboneGalleryTest', {
+AsyncTestCase('BackboneGalleryTest', {
 	setUp: function () {
 		/*:DOC gallery = <div class="gallery">
 			<img alt="BMW" src="images/bmw.jpg" />
@@ -101,12 +101,23 @@ TestCase('BackboneGalleryTest', {
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
 	},
 	
-	'test handleClick() should be called after a list item is clicked': function (queue) {
-		var spy = sinon.spy(this.backboneGallery, 'handleClick');
-		$(this.gallery).children('.thumbnails').children('li').eq(3).trigger('click');
-		
-		Helpers.async(function () {
-			assert(spy.calledOnce);
+	'test a click event handler should be added to each thumbnail': function () {
+		var spy = sinon.spy(BackboneGallery.GalleryView.__super__, 'delegateEvents');
+		var backboneGallery = new BackboneGallery.GalleryView({
+			el: this.gallery
 		});
+		assert(spy.calledOnce);
+	},
+	
+	'test handleClick() should be called after a list item is clicked': function (queue) {
+		this.backboneGallery.handleClick = callbacks.add(this.backboneGallery.handleClick);
+		$(this.gallery).children('.thumbnails').children('li').eq(3).trigger('click');
+		assert(spy.calledOnce);
+	},
+	
+	'test handleClick() should call setAsSelected()': function () {
+		var spy = sinon.spy(this.backboneGallery, 'setAsSelected');
+		$(this.gallery).children('.thumbnails').children('li').eq(5).trigger('click');
+		assert(spy.calledOnce);
 	}
 });

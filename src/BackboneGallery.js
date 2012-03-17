@@ -71,7 +71,7 @@ var BackboneGallery = (function () {
 		 * @param {Event} event A click event
 		 */
 		handleClick: function (event) {
-
+			
 		},
 		
 		
