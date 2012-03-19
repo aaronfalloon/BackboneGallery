@@ -101,23 +101,12 @@ AsyncTestCase('BackboneGalleryTest', {
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
 	},
 	
-	'test a click event handler should be added to each thumbnail': function () {
-		var spy = sinon.spy(BackboneGallery.GalleryView.__super__, 'delegateEvents');
+	'test a click event handler should be added to each thumbnail': sinon.test(function () {
+		var spy = sinon.spy(jQuery.prototype, 'delegate');
 		var backboneGallery = new BackboneGallery.GalleryView({
 			el: this.gallery
 		});
-		assert(spy.calledOnce);
-	},
-	
-	'test handleClick() should be called after a list item is clicked': function (queue) {
-		this.backboneGallery.handleClick = callbacks.add(this.backboneGallery.handleClick);
-		$(this.gallery).children('.thumbnails').children('li').eq(3).trigger('click');
-		assert(spy.calledOnce);
-	},
-	
-	'test handleClick() should call setAsSelected()': function () {
-		var spy = sinon.spy(this.backboneGallery, 'setAsSelected');
-		$(this.gallery).children('.thumbnails').children('li').eq(5).trigger('click');
-		assert(spy.calledOnce);
-	}
+		assert(spy.withArgs('li', 'click', 'handleClick').calledOnce);
+		jQuery.prototype.delegate.restore();
+	})
 });
