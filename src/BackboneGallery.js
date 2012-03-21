@@ -71,7 +71,8 @@ var BackboneGallery = (function () {
 		 * @param {Event} event A click event
 		 */
 		handleClick: function (event) {
-			
+			var images = this.$el.children('.thumbnails').find('img');
+			this.setAsSelected(images.index(event.target));
 		},
 		
 		

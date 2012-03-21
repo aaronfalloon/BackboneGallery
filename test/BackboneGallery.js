@@ -1,11 +1,4 @@
-Helpers = {
-	// From http://fitzgeraldnick.com/weblog/35/
-	async: function (fn) {
-		setTimeout(fn, 20);
-	}
-};
-
-AsyncTestCase('BackboneGalleryTest', {
+TestCase('BackboneGalleryTest', {
 	setUp: function () {
 		/*:DOC gallery = <div class="gallery">
 			<img alt="BMW" src="images/bmw.jpg" />
@@ -35,6 +28,10 @@ AsyncTestCase('BackboneGalleryTest', {
 		assertException(function () {
 			var gallery = new BackboneGallery.GalleryView();
 		});
+	},
+	
+	'test should throw an exception if the element doesn\'t have the correct markup': function () {
+		
 	},
 	
 	'test GalleryView should create associated GalleryCollection': function () {
@@ -101,12 +98,11 @@ AsyncTestCase('BackboneGalleryTest', {
 		assertEquals($(this.gallery).children('.thumbnails').children('li').children('img').eq(3).attr('src'), $(this.gallery).children('img').eq(0).attr('src'));
 	},
 	
-	'test a click event handler should be added to each thumbnail': sinon.test(function () {
-		var spy = sinon.spy(jQuery.prototype, 'delegate');
-		var backboneGallery = new BackboneGallery.GalleryView({
-			el: this.gallery
+	'test handleClick() should call setAsSelected() with the right index': function () {
+		var spy = sinon.spy(this.backboneGallery, 'setAsSelected');
+		this.backboneGallery.handleClick({
+			target: $(this.gallery).children('.thumbnails').find('img').get(5)
 		});
-		assert(spy.withArgs('li', 'click', 'handleClick').calledOnce);
-		jQuery.prototype.delegate.restore();
-	})
+		assert(spy.withArgs(5).calledOnce);
+	}
 });
