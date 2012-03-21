@@ -41,6 +41,7 @@ var BackboneGallery = (function () {
 		
 		initialize: function (args) {
 			var imageModels,
+				list,
 				self = this,
 				thumbnails;
 				
@@ -48,10 +49,19 @@ var BackboneGallery = (function () {
 				throw new Error('el can\'t be undefined');
 			}
 			
+			// Validate the markup
+			list = this.$el.children('.thumbnails');
+			if (list.length === 0) {
+				throw new Error('el must contain an unordered list with a class "thumbnails"');
+			}
+			if (this.$el.children('img').length === 0) {
+				throw new Error('el must contain an image to display the selected image');
+			}
+			
 			this.removeDuplicates();
 			this.collection = new GalleryCollection();
 			// Create image models for each list item
-			thumbnails = this.$el.children('.thumbnails').children('li');
+			thumbnails = list.children('li');
 			imageModels = [];
 			thumbnails.each(function (index) {
 				imageModels.push(new ImageModel({

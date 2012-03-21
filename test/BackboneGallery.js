@@ -31,7 +31,26 @@ TestCase('BackboneGalleryTest', {
 	},
 	
 	'test should throw an exception if the element doesn\'t have the correct markup': function () {
-		
+		var self = this;
+		/*:DOC badGalleries = <div>
+			<div class="gallery">
+				<img alt="BMW" src="images/bmw.jpg" />
+			</div> 
+			<div class="gallery">
+				<ul class="thumbnails">
+				</ul>
+			</div>
+		</div> */
+		assertException(function () {
+			var gallery = new BackboneGallery.GalleryView({
+				el: $(self.badGalleries).children('.gallery').get(0)
+			});
+		});
+		assertException(function () {
+			var gallery = new BackboneGallery.GalleryView({
+				el: $(self.badGalleries).children('.gallery').get(1)
+			});
+		});
 	},
 	
 	'test GalleryView should create associated GalleryCollection': function () {
