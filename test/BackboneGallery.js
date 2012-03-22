@@ -20,10 +20,6 @@ TestCase('BackboneGalleryTest', {
 		});
 	},
 	
-	tearDown: function () {
-		
-	},
-	
 	'test GalleryView should expect <div> with .gallery as its el argument': function () {
 		assertException(function () {
 			var gallery = new BackboneGallery.GalleryView();
