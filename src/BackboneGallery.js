@@ -24,7 +24,6 @@ var BackboneGallery = (function () {
 		 */
 		select: function (index) {
 			this.selected = this.at(index);
-			
 			this.trigger('select:image', index);
 		}
 	});
@@ -49,7 +48,7 @@ var BackboneGallery = (function () {
 				throw new Error('el can\'t be undefined');
 			}
 			
-			// Validate the markup
+			// Validate and clean-up the markup
 			list = this.$el.children('.thumbnails');
 			if (list.length === 0) {
 				throw new Error('el must contain an unordered list with a class "thumbnails"');
@@ -57,8 +56,9 @@ var BackboneGallery = (function () {
 			if (this.$el.children('img').length === 0) {
 				throw new Error('el must contain an image to display the selected image');
 			}
-			
 			this.removeDuplicates();
+			
+			// Set up the collection
 			this.collection = new GalleryCollection();
 			// Create image models for each list item
 			thumbnails = list.children('li');

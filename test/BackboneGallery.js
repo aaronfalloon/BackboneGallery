@@ -115,6 +115,7 @@ TestCase('BackboneGalleryTest', {
 	
 	'test handleClick() should call setAsSelected() with the right index': function () {
 		var spy = sinon.spy(this.backboneGallery, 'setAsSelected');
+		spy.withArgs(5);
 		this.backboneGallery.handleClick({
 			target: $(this.gallery).children('.thumbnails').find('img').get(5)
 		});
