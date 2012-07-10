@@ -1,0 +1,20 @@
+<project>
+  <target name="version">
+    <loadfile property="version.old" srcFile="version.txt" />
+    <input message="Current version number is ${version.old}. Please enter the new version number:" defaultValue="${version.old}" addproperty="version" />
+    <echo file="version.txt" message="${version}" />
+  </target>
+  <target name="properties">
+    <tstamp>
+      <format property="timestamp" pattern="yyyyMMddHHmmss" />
+    </tstamp>
+    <property file="build.user.properties" />
+    <property file="build.properties" />
+  </target>
+  <target name="create_build" depends="properties">
+    <echo>Creating build...</echo>
+    <delete dir="${dir.build}" />
+    <mkdir dir="${dir.build.current}" />
+    <echo>Finished.</echo>
+  </target>
+</project>
